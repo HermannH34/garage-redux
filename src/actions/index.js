@@ -15,7 +15,6 @@ export function fetchCars() {
 }
 
 export function createCar(values, callback) {
-  debugger
   const request = fetch(url, {
     method: 'POST',
     headers: {
