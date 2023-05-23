@@ -3,6 +3,31 @@ import { Field, reduxForm } from 'redux-form';
 import { createCar } from '../actions';
 import { connect } from 'react-redux';
 
+const validate = values => {
+  const errors = {}
+
+  if (!values.plate) {
+    errors.plate = 'Required'
+  }
+
+  if (!values.brand) {
+    errors.brand = 'Required'
+  }
+
+  if (!values.model) {
+    errors.model = 'Required'
+  }
+
+  if (!values.owner) {
+    errors.owner = 'Required'
+  }
+
+  if (!/^[A-Z]+$/.test(values.plate)) {
+    errors.plate = 'should be all caps and no special characters'
+  }
+  return errors
+}
+
 class CarNew extends Component {
   onSubmit = (values) => {
     this.props.createCar(values, (car) => {
@@ -11,21 +36,23 @@ class CarNew extends Component {
     });
   }
 
-  renderField(field) {
+  renderField({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <div className="form-group">
-        <label>{field.label}</label>
+        <label>{label}</label>
         <input
           className="form-control"
-          type={field.type}
-          {...field.input}
+          type={type}
+          {...input}
         />
+        {touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
       </div>
     );
   }
 
   render() {
     return (
+
       <div>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
           <Field
@@ -62,6 +89,6 @@ class CarNew extends Component {
   }
 }
 
-export default reduxForm({ form: 'newPostForm' })(
+export default reduxForm({ form: 'newPostForm', validate })(
   connect(null, { createCar })(CarNew)
 );
