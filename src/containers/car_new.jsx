@@ -32,13 +32,14 @@ class CarNew extends Component {
   onSubmit = (values) => {
     this.props.createCar(values, (car) => {
       this.props.history.push('/');
+      console.log(car)
       return car;
     });
   }
 
   renderField({ input, label, type, meta: { touched, error, warning } }) {
     return (
-      <div className="form-group">
+      <div className="form-group col-10 mt-4">
         <label>{label}</label>
         <input
           className="form-control"
@@ -52,7 +53,6 @@ class CarNew extends Component {
 
   render() {
     return (
-
       <div>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
           <Field

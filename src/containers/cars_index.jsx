@@ -12,11 +12,14 @@ class CarsIndex extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="contain">
+        <div className="create-car">
+          <h3 id="garage">Garage</h3>
+          <Link to="car/new" className="btn btn-ghost">Add a Car</Link>
+        </div>
         {this.props.cars.map((car, i) => (
           <Car key={i} car={car} />
         ))}
-        <Link to="car/new" className="btn btn-ghost">Add a Car</Link>
       </div>
     )
   }
